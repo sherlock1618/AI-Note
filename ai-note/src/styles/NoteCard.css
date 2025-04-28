@@ -1,0 +1,92 @@
+/* src/styles/NoteCard.css */
+.note-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Ensures elements are stacked */
+  justify-content: space-between;
+  min-height: 150px; /* Minimum height */
+  overflow: visible; /* Ensure content is not hidden */
+}
+
+.note-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.note-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.note-card h3 {
+  margin-top: 0;
+  color: #6200ee;
+}
+
+.note-card p {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.note-meta {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.note-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+.note-content {
+  margin: 1rem 0;
+  flex-grow: 1; /* Allow content to grow and take available space */
+  min-height: 60px;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.note-date {
+  font-style: italic;
+}
+
+.note-id {
+  background: #eee;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+}

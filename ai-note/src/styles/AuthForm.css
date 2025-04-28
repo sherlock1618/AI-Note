@@ -1,0 +1,171 @@
+.auth-section {
+    background: #f9f9f9;
+    border-radius: 20px;
+    padding: 40px;
+    margin: 60px auto;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+  
+  .auth-tabs {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .tab-btn.active {
+    font-weight: bold;
+    color: #6200ee;
+  }
+  
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #6200ee;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .form-group input {
+    color: black;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #6200ee;
+  }
+  
+  .auth-submit {
+    background: #6200ee;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  
+  .auth-submit:hover {
+    background: #3700b3;
+  }
+  
+  /* Social Login Styles */
+  .social-login {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 1rem 0;
+  }
+  
+  .social-buttons button {
+    flex: 1;
+    max-width: 120px;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .social-buttons button:nth-child(1) { background: #db4437; color: white; } /* Google */
+  .social-buttons button:nth-child(2) { background: #333; color: white; } /* GitHub */
+  .social-buttons button:nth-child(3) { background: #1877f2; color: white; } /* Facebook */
+  
+  .social-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .divider {
+    position: relative;
+    margin: 1.5rem 0;
+    color: #777;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  /* Dark Mode Support */
+  .dark-mode .auth-section {
+    background: #1e1e1e;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  
+  .dark-mode .form-group label,
+  .dark-mode .form-group input,
+  .dark-mode .divider {
+    color: #f5f5f5;
+  }
+  
+  .dark-mode .form-group input {
+    background: #2d2d2d;
+    border-color: #444;
+  }
+
+  .remember-me {
+    align-items: center;
+    gap: 8px;
+    margin: auto;
+  }
+
+  .forgot-password {
+    align-items: center;
+    text-align: right;
+    font-size: 0.9rem;
+    color: #6200ee;
+    right: 0;
+    margin: 0 5px;
+    text-decoration: none;
+  }

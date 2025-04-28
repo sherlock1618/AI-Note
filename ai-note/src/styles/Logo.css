@@ -1,0 +1,31 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    cursor: pointer;
+  }
+  
+  .logo-text {
+    color: rgba(255, 255, 255, 0.992) !important;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, white, #e0e0e0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  /* Animation on hover */
+  .logo-container:hover .logo-text {
+    background: linear-gradient(90deg, #03dac6, #6200ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .logo-container:hover svg path {
+    stroke: #03dac6;
+    transition: stroke 0.3s ease;
+  }

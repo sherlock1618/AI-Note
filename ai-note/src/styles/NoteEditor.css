@@ -1,0 +1,146 @@
+/* src/styles/NoteEditor.css */
+.note-editor {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #6200ee;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dark .back-button {
+  color: #bb86fc;
+}
+
+.save-button {
+  background: #6200ee;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dark .save-button {
+  background: #bb86fc;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #3700b3;
+}
+
+.dark .save-button:hover:not(:disabled) {
+  background: #9a67ea;
+}
+
+.note-title-input {
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border: none;
+  border-bottom: 2px solid #eee;
+  padding: 0.5rem 0;
+  margin-bottom: 1.5rem;
+  background: transparent;
+  color: inherit;
+}
+
+.dark .note-title-input {
+  border-bottom-color: #333;
+}
+
+.note-content-input {
+  width: 100%;
+  min-height: 400px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: none;
+  resize: none;
+  padding: 0.5rem;
+  background: transparent;
+  color: inherit;
+}
+
+.error-message {
+  color: #ff4444;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #ffebee;
+  border-radius: 4px;
+}
+
+.dark .error-message {
+  background: #2d0a0a;
+}
+
+/* Add to NoteEditor.css */
+.note-editor.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0;
+  --border-color: #444;
+  --accent-color: #bb86fc;
+  --header-bg: #2d2d2d;
+  --input-bg: #252525;
+}
+
+.note-editor {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --accent-color: #6200ee;
+  --header-bg: #f5f5f5;
+  --input-bg: #fff;
+}
+
+.editor-header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.note-title-input, .note-content-input {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+.markdown-preview {
+  padding: 1rem;
+  color: var(--text-color);
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  padding: 0;
+}
+
+.view-mode.active {
+  color: var(--accent-color);
+  font-weight: bold;
+}
