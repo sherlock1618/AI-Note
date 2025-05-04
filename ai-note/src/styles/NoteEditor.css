@@ -1,59 +1,68 @@
-/* src/styles/NoteEditor.css */
+/* Fixes & Restyling for NoteEditor */
+
 .note-editor {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background: white;
   min-height: 100vh;
-  transition: background 0.3s ease;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .editor-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
-.back-button {
+.header-left, .header-center, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.view-mode {
   background: none;
   border: none;
-  color: #6200ee;
+  color: var(--text-color);
+  padding: 0.4rem 1rem;
   cursor: pointer;
   font-size: 1rem;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
 }
 
-.dark .back-button {
-  color: #bb86fc;
+.view-mode.active,
+.view-mode:hover {
+  background: var(--accent-color);
+  color: white;
 }
 
-.save-button {
-  background: #6200ee;
+.save-button, .fullscreen-toggle, .mode-toggle, .nav-button, .action-button {
+  background: var(--accent-color);
   color: white;
   border: none;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  padding: 0.5rem 1.5rem;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 1rem;
+  transition: background 0.2s ease;
 }
 
-.dark .save-button {
-  background: #bb86fc;
-}
-
-.save-button:hover:not(:disabled) {
-  background: #3700b3;
-}
-
-.dark .save-button:hover:not(:disabled) {
-  background: #9a67ea;
+.save-button:hover:not(:disabled),
+.fullscreen-toggle:hover,
+.mode-toggle:hover,
+.nav-button:hover {
+  background: #4e00b2;
 }
 
 .note-title-input {
@@ -61,15 +70,11 @@
   font-size: 1.8rem;
   font-weight: bold;
   border: none;
-  border-bottom: 2px solid #eee;
-  padding: 0.5rem 0;
-  margin-bottom: 1.5rem;
-  background: transparent;
-  color: inherit;
-}
-
-.dark .note-title-input {
-  border-bottom-color: #333;
+  border-bottom: 2px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  background: var(--input-bg);
+  color: var(--text-color);
 }
 
 .note-content-input {
@@ -77,11 +82,21 @@
   min-height: 400px;
   font-size: 1.1rem;
   line-height: 1.6;
-  border: none;
-  resize: none;
-  padding: 0.5rem;
-  background: transparent;
-  color: inherit;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  resize: vertical;
+  padding: 1rem;
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+.markdown-preview {
+  width: 100%;
+  padding: 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-color);
 }
 
 .error-message {
@@ -96,14 +111,36 @@
   background: #2d0a0a;
 }
 
-/* Add to NoteEditor.css */
+.editor-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  padding: 2rem;
+  background: var(--bg-color);
+  overflow-y: auto;
+}
+
+/* Theme Variables */
 .note-editor.dark {
   --bg-color: #1e1e1e;
   --text-color: #f0f0f0;
   --border-color: #444;
   --accent-color: #bb86fc;
   --header-bg: #2d2d2d;
-  --input-bg: #252525;
+  --input-bg: #2b2b2b;
 }
 
 .note-editor {
@@ -115,32 +152,104 @@
   --input-bg: #fff;
 }
 
-.editor-header {
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
+/* Light Theme */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+  --accent-color: #6200ee;
+  --header-bg: #f5f5f5;
+  --input-bg: #ffffff;
 }
 
-.note-title-input, .note-content-input {
-  background: var(--input-bg);
-  color: var(--text-color);
+/* Dark Theme */
+.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0;
+  --border-color: #444444;
+  --accent-color: #bb86fc;
+  --header-bg: #2d2d2d;
+  --input-bg: #2b2b2b;
 }
 
-.markdown-preview {
-  padding: 1rem;
-  color: var(--text-color);
+.title-with-suggest {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  padding: 0;
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.view-mode.active {
-  color: var(--accent-color);
-  font-weight: bold;
+.editor-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
+
+.note-editor.fullscreen {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-content-input {
+  flex-grow: 1;
+  min-height: 400px;
+}
+
+
+.suggested-titles-scroll {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  z-index: 10;
+  scrollbar-width: thin; 
+}
+
+.suggested-title-button {
+  flex-shrink: 0;
+  background-color: var(--suggest-bg, #f0f0f0);
+  color: var(--suggest-text, #333);
+  border: none;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+  text-overflow: ellipsis; /* Ensure that long text does not overflow */
+  max-width: 200px; /* Optional: adds a max width to ensure uniformity */
+  overflow: hidden; /* Prevents overflow of text */
+}
+
+.suggested-title-button:hover {
+  background-color: var(--suggest-hover, #ddd);
+}
+
+.dark .suggested-title-button {
+  background-color: #333;
+  color: #eee;
+}
+
+.dark .suggested-title-button:hover {
+  background-color: #444;
+}
+
+.suggested-titles-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.suggested-titles-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.suggested-titles-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+

@@ -3,7 +3,7 @@ const http = require('http');
 const dbURI = process.env.DB_URI || 'mongodb://localhost:27017/mydatabase';
 const app = require('./app');
 const server = http.createServer(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 require('dotenv').config();
 

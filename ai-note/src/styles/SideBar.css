@@ -1,23 +1,24 @@
-/* Sidebar Styling */
 .sidebar {
-  width: 250px;
   background: #202020 !important;
   color: white;
-  height: 100vh; /* Full viewport height */
-  position: fixed; /* Fixed position */
+  height: 100vh;
+  position: fixed;
   left: 0;
   top: 0;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  overflow-y: auto; /* Allow scrolling in sidebar */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  width: 250px;
+  z-index: 1000;
+  transition: width 0.3s;
 }
 
 .sidebar nav {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Takes remaining space */
+  flex-grow: 1;
   gap: 10px;
 }
 
@@ -30,6 +31,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
 }
 
 .sidebar a:hover {
@@ -44,50 +46,67 @@
 .sidebar .logo {
   font-size: 2rem;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .sidebar-footer {
-  margin-top: auto; /* Pushes to bottom */
+  margin-top: auto;
   padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.9rem;
   color: #bdc3c7;
 }
 
-/* Responsive Styling for Sidebar */
-
-/* Medium screens (between 600px and 1024px) */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 200px; /* Smaller sidebar width for medium screens */
-  }
-
-  .main-content {
-    margin-left: 200px; /* Adjust main content's margin to fit new sidebar width */
-  }
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.3s;
 }
 
-/* Small screens (below 600px) */
-@media (max-width: 599px) {
+@media (max-width: 1024px) {
   .sidebar {
-    position: relative; /* Switch to relative positioning */
-    width: 100%; /* Full-width sidebar for mobile */
-    height: auto; /* Remove fixed height for mobile */
-    padding: 15px; /* Adjust padding for mobile */
+    width: 80px;
   }
 
-  .sidebar nav {
-    flex-direction: row; /* Stack sidebar items horizontally for smaller screens */
-    justify-content: space-between;
+  .sidebar a {
+    justify-content: center;
+    gap: 0;
   }
 
-  .main-content {
-    margin-left: 0; /* Remove margin for mobile */
-    padding: 10px; /* Adjust padding */
-    overflow-x: auto; /* Prevent horizontal overflow */
+  .sidebar a span {
+    display: none;
+  }
+
+  .sidebar .logo {
+    text-align: center;
+    font-size: 1.5rem;
   }
 
   .sidebar-footer {
-    padding-top: 10px; /* Adjust footer padding for mobile */
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 599px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar a {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .sidebar a span {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 60px;
+    padding: 10px;
   }
 }

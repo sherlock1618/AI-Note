@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../context/Theme';
 import { FaSave, FaArrowLeft, FaExpand, FaCompress, FaMarkdown } from 'react-icons/fa';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { createNote, updateNote, getNoteById } from '../services/notesApi';
+import { createNote, updateNote, getNoteById, getSuggestedTitles, getSummary } from '../services/notesApi';
 import '../styles/NoteEditor.css';
+import useTheme from '../hooks/useTheme';
 
 const NoteEditor = () => {
-  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+  const { darkMode, toggleTheme } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
   const [note, setNote] = useState({ title: '', content: '' });
@@ -17,12 +17,16 @@ const NoteEditor = () => {
   const [error, setError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [viewMode, setViewMode] = useState('edit'); 
+  const [viewMode, setViewMode] = useState('edit');
+  const [suggestedTitles, setSuggestedTitles] = useState([
+    'Example Title 1',
+    'Example Title 2',
+  ]);
 
   useEffect(() => {
     const loadNote = async () => {
       if (id === 'new' || id === undefined) {
-        setNote({ title: 'Untitled Note', content: '' });
+        setNote({ title: '', content: '' });
         setLoading(false);
         return;
       }
@@ -59,7 +63,7 @@ const NoteEditor = () => {
       } else {
         await updateNote(id, note);
       }
-      
+
       navigate('/notes');
     } catch (err) {
       setError(`Failed to save note: ${err.message}`);
@@ -70,6 +74,28 @@ const NoteEditor = () => {
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
+  };
+
+  const handleSummarize = async () => {
+    try{
+      const summary = await getSummary(note.content);
+      setNote(prev => ({ ...prev, content: summary }));
+    } catch (error) {
+      setError(`Failed to summarize note: ${error.message}`);
+    }
+  };
+
+  const handleSuggestTitle = async () => {
+    try{
+      const titles = await getSuggestedTitles(note.content);
+      setSuggestedTitles(titles);
+    } catch (error) {
+      setError(`Failed to suggest title: ${error.message}`);
+    }
+  };
+
+  const applySuggestedTitle = (title) => {
+    setNote(prev => ({ ...prev, title }));
   };
 
   if (loading) return (
@@ -100,13 +126,13 @@ const NoteEditor = () => {
           </button>
           <button
             className="mode-toggle"
-            onClick={toggleDarkMode}
+            onClick={toggleTheme}
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {darkMode ? <MdLightMode /> : <MdDarkMode />}
           </button>
         </div>
-        
+
         <div className="header-center">
           <button
             className={`view-mode ${viewMode === 'edit' ? 'active' : ''}`}
@@ -142,15 +168,37 @@ const NoteEditor = () => {
 
       {viewMode === 'edit' ? (
         <>
-          <input
-            type="text"
-            name="title"
-            value={note.title}
-            onChange={handleChange}
-            className="note-title-input"
-            placeholder="Note Title"
-            autoFocus
-          />
+          <div className="title-with-suggest">
+            <input
+              type="text"
+              name="title"
+              value={note.title}
+              onChange={handleChange}
+              className="note-title-input"
+              placeholder="Note Title"
+              autoFocus
+            />
+            <button
+              className="action-button"
+              onClick={handleSuggestTitle}
+              disabled={!note.content.trim()}
+            >
+              Suggest Title
+            </button>
+          </div>
+
+          <div className="suggested-titles-scroll">
+            {suggestedTitles.map((title, index) => (
+              <button
+                key={index}
+                className="suggested-title-button"
+                onClick={() => applySuggestedTitle(title)}
+              >
+                {title}
+              </button>
+            ))}
+          </div>
+
           <textarea
             name="content"
             value={note.content}
@@ -179,8 +227,17 @@ const NoteEditor = () => {
         <div className="markdown-hint">
           <FaMarkdown /> Markdown supported
         </div>
-        <div className="character-count">
-          {note.content.length} characters
+        <div className="footer-right">
+          <div className="character-count">
+            {note.content.length} characters
+          </div>
+          <button
+            className="action-button"
+            onClick={handleSummarize}
+            disabled={!note.content.trim()}
+          >
+            Summarize
+          </button>
         </div>
       </div>
     </div>

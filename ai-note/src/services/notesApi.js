@@ -53,7 +53,7 @@ export const deleteNote = async (id) => {
 };
 
 export const fetchDeletedNotes = async () => {
-  const response = await fetch(`${API_BASE_URL}/deleted-notes`, {
+  const response = await fetch(`${API_BASE_URL}/notes/deleted`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -81,3 +81,25 @@ export const deleteNotePermanently = async (noteId) => {
   if (!response.ok) throw new Error('Failed to delete note permanently');
   return noteId;
 };
+
+export const getSuggestedTitles = async (content) => {
+  const response = await fetch(`${API_BASE_URL}/notes/suggested-titles`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content }),
+    credentials: 'include',
+  });
+  if (!response.ok) throw new Error('Failed to fetch suggested titles');
+  return await response.json();
+}
+
+export const getSummary = async (content) => {
+  const response = await fetch(`${API_BASE_URL}/notes/summerize`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content }),
+    credentials: 'include',
+  });
+  if (!response.ok) throw new Error('Failed to fetch summary');
+  return await response.json();
+}

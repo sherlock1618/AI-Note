@@ -48,7 +48,12 @@ const NotesPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteNote(id);
+      const response = await deleteNote(id);
+      if (response !== id) {
+        console.error('Failed to delete note:', response);
+        return;
+      }
+      console.log('Note deleted:', id);
       setNotes(prevNotes => prevNotes.filter(note => (note._id || note.id) !== id));
     } catch (err) {
       setError(err.message);

@@ -42,7 +42,6 @@ async function deleteNote(id, userId) {
   const note = await Note.findById(id);
   if (!note) return null;
   if (note.userId.toString() !== userId.toString()) return null;
-  if (note.isDeleted) return null;
   note.isDeleted = true;
   await note.save();
   return note;

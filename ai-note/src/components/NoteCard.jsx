@@ -37,7 +37,7 @@ const NoteCard = ({ note, onDelete }) => {
         }}
         aria-label="Delete note"
       >
-        ×
+        x
       </button>
     </div>
   );

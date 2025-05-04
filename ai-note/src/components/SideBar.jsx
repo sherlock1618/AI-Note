@@ -7,31 +7,31 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <Logo size={50} />      
+      <Logo size={40} />
       <nav>
         <Link 
           to="/" 
           className={location.pathname === '/' ? 'active' : ''}
         >
-          <span>🏠</span> Home
+          🏠 <span>Home</span>
         </Link>
         <Link 
           to="/notes" 
           className={location.pathname.startsWith('/notes') ? 'active' : ''}
         >
-          <span>📝</span> Your Notes
+          📝 <span>Your Notes</span>
         </Link>
         <Link 
           to="/trash" 
           className={location.pathname === '/trash' ? 'active' : ''}
         >
-          <span>🗑️</span> Trash
+          🗑️ <span>Trash</span>
         </Link>
       </nav>
 
       <div className="sidebar-footer">
         <p>v1.0.0</p>
-        <p>© 2023 AI Note</p>
+        <p>© 2025 AI-Note</p>
       </div>
     </div>
   );
