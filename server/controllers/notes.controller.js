@@ -4,6 +4,8 @@ const {
     getNoteById,
     updateNote,
     deleteNote,
+    deleteNotePermenantly,
+    restoreNote,
   } = require('../models/notes.model'); 
 
 async function HTTPCreateNote(req, res) {
@@ -145,6 +147,50 @@ async function HTTPGetDeletedNotes(req, res) {
   }
 }
 
+async function HTTPDeleteNotePermenantly(req, res){
+  const { id } = req.params;
+  const userId = req.user?.id;
+  if(!id){
+    return res.status(400).json({error: "note id is required!"});
+  }
+  try{
+    const deletedNote = await deleteNotePermenantly(id, userId);
+    if(!deletedNote){
+      return res.status(404).json("note not found!");
+    }
+
+    return res.status(200).json(deleteNote);
+  } catch(err){
+    console.error(err);
+    if (err.name === 'CastError') {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+async function HTTPRestoreNote(req, res){
+  const { id } = req.params;
+  const userId = req.user?.id;
+  if(!id){
+    return res.status(400).json({error: "note id is required!"});
+  }
+  try{
+    const restoredNote = await restoreNote(id, userId);
+    if(!restoredNote){
+      return res.status(404).json("note not found!");
+    }
+
+    return res.status(200).json(restoredNote);
+  } catch(err){
+    console.error(err);
+    if (err.name === 'CastError') {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 async function HTTPSuggestTitle(req, res) {
   const { content } = req.body;
   if (!content) return res.status(400).json({ error: 'Content is required' });
@@ -213,5 +259,7 @@ module.exports = {
   HTTPGetDeletedNotes,
   HTTPSuggestTitle,
   HTTPSummarizeNote,
+  HTTPDeleteNotePermenantly,
+  HTTPRestoreNote,
 };
   

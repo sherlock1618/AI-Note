@@ -63,7 +63,7 @@ export const fetchDeletedNotes = async () => {
 };
 
 export const restoreNote = async (noteId) => {
-  const response = await fetch(`${API_BASE_URL}/deleted-notes/${noteId}`, {
+  const response = await fetch(`${API_BASE_URL}/notes/deleted-notes/${noteId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -73,7 +73,7 @@ export const restoreNote = async (noteId) => {
 };
 
 export const deleteNotePermanently = async (noteId) => {
-  const response = await fetch(`${API_BASE_URL}/deleted-notes/${noteId}`, {
+  const response = await fetch(`${API_BASE_URL}/notes/deleted-notes/${noteId}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',

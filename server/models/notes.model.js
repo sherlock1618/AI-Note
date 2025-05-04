@@ -47,10 +47,31 @@ async function deleteNote(id, userId) {
   return note;
 }
 
+async function deleteNotePermenantly(id, userId){
+  if(!isValidObjectId(id)) return null;
+  const note = await Note.findById(id);
+  if(!note) return null;
+  if(note.userId.toString() !== userId.toString()) return null;
+
+  return await note.deleteOne();
+}
+
+async function restoreNote(id, userId){
+  if(!isValidObjectId(id)) return null;
+  const note = await Note.findById(id);
+  if(!note) return null;
+  if(note.userId.toString() !== userId.toString()) return null;
+  note.isDeleted = false;
+  await note.save();
+  return note;
+}
+
 module.exports = {
   createNote,
   getAllNotes,
   getNoteById,
   updateNote,
   deleteNote,
+  deleteNotePermenantly,
+  restoreNote,
 };
