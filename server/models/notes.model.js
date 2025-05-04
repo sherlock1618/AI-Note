@@ -66,6 +66,7 @@ async function restoreNote(id, userId){
   return note;
 }
 
+
 module.exports = {
   createNote,
   getAllNotes,

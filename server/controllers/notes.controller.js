@@ -194,23 +194,26 @@ async function HTTPRestoreNote(req, res){
 async function HTTPSuggestTitle(req, res) {
   const { content } = req.body;
   if (!content) return res.status(400).json({ error: 'Content is required' });
-  console.log('content', content);
-  return res.status(200).json(['Title 1', 'Title 2', 'Title 3']);
   try {
-    // const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    //   },
-    //   body: JSON.stringify({
-    //     model: 'gpt-3.5-turbo',
-    //     messages: [{ role: 'user', content: `Suggest a title for the following note content:\n\n${content}` }],
-    //   }),
-    // });
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: `Suggest 3 titles for the following note content:\n\n${content}` }],
+      }),
+    });
     const data = await response.json();
+    const titles = data.choices[0].message.content
+      .split('\n')
+      .map(line => line.replace(/^\d+\.\s*/, '').trim())
+      .filter(line => line);
+      console.log("titles: ", titles);
     if (response.ok) {
-      return res.status(200).json({ title: data.choices[0].message.content });
+      return res.status(200).json(titles);
     } else {
       return res.status(500).json({ error: data.error.message });
     }
@@ -223,23 +226,21 @@ async function HTTPSuggestTitle(req, res) {
 async function HTTPSummarizeNote(req, res) {
   const { content } = req.body;
   if (!content) return res.status(400).json({ error: 'Content is required' });
-  console.log('content', content);
-  return res.status(200).json('This is a summary of the note content.');
   try {
-    // const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    //   },
-    //   body: JSON.stringify({
-    //     model: 'gpt-3.5-turbo',
-    //     messages: [{ role: 'user', content: `Summarize the following note content:\n\n${content}` }],
-    //   }),
-    // });
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: `Summarize the following note content:\n\n${content}` }],
+      }),
+    }); 
     const data = await response.json();
     if (response.ok) {
-      return res.status(200).json({ summary: data.choices[0].message.content });
+      return res.status(200).json(data.choices[0].message.content);
     } else {
       return res.status(500).json({ error: data.error.message });
     }
