@@ -252,4 +252,13 @@
   background: transparent;
 }
 
+.speech-btns {
+  justify-content: center;
+  align-items: center;
+  margin: 1 auto;
+  gap: 10px;
+}
 
+.speech-btn {
+  margin: 3px 
+}

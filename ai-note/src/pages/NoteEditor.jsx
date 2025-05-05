@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaSave, FaArrowLeft, FaExpand, FaCompress, FaMarkdown } from 'react-icons/fa';
+import { FaSave, FaArrowLeft, FaExpand, FaCompress, } from 'react-icons/fa';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { createNote, updateNote, getNoteById, getSuggestedTitles, getSummary } from '../services/notesApi';
+import { FaPlay, FaPause, FaStop } from 'react-icons/fa';
 import '../styles/NoteEditor.css';
 import useTheme from '../hooks/useTheme';
 
@@ -98,6 +99,24 @@ const NoteEditor = () => {
   const applySuggestedTitle = (title) => {
     setNote(prev => ({ ...prev, title }));
   };
+
+  const speakNote = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const pauseSpeech = () => {
+    window.speechSynthesis.pause();
+  }
+
+  const stopSpeech = () => {
+    window.speechSynthesis.cancel();
+  }
+
+  const resumeSpeech = () => {
+    window.speechSynthesis.resume();
+  }
+  
 
   if (loading) return (
     <div className={`loading-state ${darkMode ? 'dark' : ''}`}>
@@ -224,8 +243,19 @@ const NoteEditor = () => {
       )}
 
       <div className="editor-footer">
-        <div className="markdown-hint">
-          <FaMarkdown /> Markdown supported
+        <div className='speech-btns'>
+          <button className='speech-btn' onClick={() => speakNote(note.content)}>
+            🔊 Read Note
+          </button>          
+          <button className='speech-btn' onClick={() => resumeSpeech()}>
+            <FaPlay />
+          </button>          
+          <button className='speech-btn' onClick={() => pauseSpeech()}>
+            <FaPause />
+          </button>          
+          <button className='speech-btn' onClick={() => stopSpeech()}>
+            <FaStop />
+          </button>          
         </div>
         <div className="footer-right">
           <div className="character-count">
