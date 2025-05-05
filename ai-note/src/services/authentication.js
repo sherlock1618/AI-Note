@@ -52,3 +52,20 @@ export const verifyEmail = async (email) => {
 
   return await response.json();
 };
+
+export const logout = async () => {
+  const response = await fetch(`${API_BASE}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: "include",
+  });
+
+  if(!response.ok){
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Logout failed');
+  }
+
+  return await response.json();
+}

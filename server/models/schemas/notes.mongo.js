@@ -8,6 +8,9 @@ const notesSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    summary: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

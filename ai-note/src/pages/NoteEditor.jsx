@@ -12,27 +12,27 @@ const NoteEditor = () => {
   const { darkMode, toggleTheme } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [note, setNote] = useState({ title: '', content: '' });
+  const [note, setNote] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [summary, setSummary] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [viewMode, setViewMode] = useState('edit');
   const [suggestedTitles, setSuggestedTitles] = useState([
-    'Example Title 1',
-    'Example Title 2',
   ]);
 
   useEffect(() => {
     const loadNote = async () => {
       if (id === 'new' || id === undefined) {
-        setNote({ title: '', content: '' });
+        setNote({ title: '', content: '', summary: '' });
         setLoading(false);
         return;
       }
 
       try {
         const data = await getNoteById(id);
+        setSummary(data.summary);
         setNote(data);
       } catch (err) {
         setError(`Failed to load note: ${err.message}`);
@@ -57,7 +57,7 @@ const NoteEditor = () => {
 
     try {
       setIsSaving(true);
-
+      note.summary = summary;
       if (id === 'new' || id === undefined) {
         await createNote(note);
       } else {
@@ -79,7 +79,8 @@ const NoteEditor = () => {
   const handleSummarize = async () => {
     try{
       const summary = await getSummary(note.content);
-      setNote(prev => ({ ...prev, content: summary }));
+      setSummary(summary);
+      
     } catch (error) {
       setError(`Failed to summarize note: ${error.message}`);
     }
@@ -144,7 +145,7 @@ const NoteEditor = () => {
             className={`view-mode ${viewMode === 'preview' ? 'active' : ''}`}
             onClick={() => setViewMode('preview')}
           >
-            Preview
+            Summary
           </button>
         </div>
 
@@ -209,9 +210,8 @@ const NoteEditor = () => {
         </>
       ) : (
         <div className="markdown-preview">
-          <h1>{note.title}</h1>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {note.content}
+            {summary || "Not summary yet."}
           </ReactMarkdown>
         </div>
       )}

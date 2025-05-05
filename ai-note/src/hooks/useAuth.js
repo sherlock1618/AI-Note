@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuthCheck } from '../context/AuthContext';
-import { loginUser, registerUser, verifyEmail } from '../services/authentication';
+import { loginUser, registerUser, verifyEmail, logout } from '../services/authentication';
 import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
@@ -104,6 +104,19 @@ const useAuth = () => {
     }
   };
 
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try{
+      await logout();
+      navigate('/');
+    } catch(err){
+      setErrors({logout: err.message});
+    } finally {
+      setIsLoading(false);
+    }
+
+  }
+
   return {
     activeTab,
     setActiveTab,
@@ -116,7 +129,8 @@ const useAuth = () => {
     handleChange,
     handleSubmit,
     handleEmailVerification,
-    handleSocialLogin
+    handleSocialLogin,
+    handleLogout,
   };
 };
 

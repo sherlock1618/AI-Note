@@ -18,14 +18,18 @@ const NotesPage = () => {
       const data = await fetchNotes();
       
       console.log('API Response:', data);
-      
-      const validatedNotes = data.map(note => {
+      let validatedNotes;
+      if(!data){
+        validatedNotes = [];
+      } else{
+        validatedNotes = data.map(note => {
         if (!note._id && !note.id) {
           console.error('Note missing ID:', note);
           return { ...note, _id: `temp-${Math.random().toString(36).substr(2, 9)}` };
         }
-        return note;
-      });
+          return note;
+        });
+      }
       
       setNotes(validatedNotes);
       setError(null);

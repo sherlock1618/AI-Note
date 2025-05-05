@@ -16,6 +16,7 @@ export const fetchNotes = async () => {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include'
   });
+  if(response.status === 404) return [];
   if (!response.ok) throw new Error('Failed to fetch notes');
   return await response.json();
 };
@@ -58,6 +59,7 @@ export const fetchDeletedNotes = async () => {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   });
+  if(response.status === 404) return [];
   if (!response.ok) throw new Error('Failed to fetch deleted notes');
   return await response.json();
 };
@@ -89,6 +91,7 @@ export const getSuggestedTitles = async (content) => {
     body: JSON.stringify({ content }),
     credentials: 'include',
   });
+  if(response.status === 404) return [];
   if (!response.ok) throw new Error('Failed to fetch suggested titles');
   return await response.json();
 }
@@ -100,6 +103,7 @@ export const getSummary = async (content) => {
     body: JSON.stringify({ content }),
     credentials: 'include',
   });
+  if(response.status === 404) return '';
   if (!response.ok) throw new Error('Failed to fetch summary');
   return await response.json();
 }

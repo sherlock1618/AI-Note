@@ -10,7 +10,7 @@ const {
 
 async function HTTPCreateNote(req, res) {
   const { id } = req.user;
-  const { title, content } = req.body;
+  const { title, content, summary } = req.body;
   if (!title || !content) {
     return res.status(400).json({ error: 'Title and content are required' });
   }
@@ -19,6 +19,7 @@ async function HTTPCreateNote(req, res) {
     userId: id,
     title,
     content,
+    summary,
   }
   console.log('data', data);
   try {
@@ -52,9 +53,9 @@ async function HTTPGetNotes(req, res) {
 async function HTTPGetNoteById(req, res) {
   const { id } = req.user;
   try {
-    const Note = await getNoteById(req.params.id, id);
-    if (!Note) return res.status(404).json({ error: 'Note not found' });
-    return res.status(200).json(Note);
+    const note = await getNoteById(req.params.id, id);
+    if (!note) return res.status(404).json({ error: 'Note not found' });
+    return res.status(200).json(note);
   } catch (err) {
     console.error(err);
     if (err.name === 'CastError') {
@@ -66,13 +67,13 @@ async function HTTPGetNoteById(req, res) {
 
 async function HTTPUpdateNote(req, res) {
   const { id } = req.user;
-  const { title, content } = req.body;
+  const { title, content, summary } = req.body;
   if (!title || !content) {
     return res.status(400).json({ error: 'Title and content are required' });
   }
-  console.log('title', title, 'content', content);
+  console.log('title', title, 'content', content, 'summary', summary);
   try {
-    const updated = await updateNote(req.params.id, {title, content}, id);
+    const updated = await updateNote(req.params.id, {title, content, summary}, id);
     if (!updated) return res.status(404).json({ error: 'Note not found' });
     return res.status(200).json(updated);
   } catch (err) {
@@ -83,7 +84,7 @@ async function HTTPUpdateNote(req, res) {
     if (err.message === 'Note is deleted') {
       return res.status(400).json({ error: 'Note is deleted' });
     }
-    return res.status(400).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 }
 

@@ -28,10 +28,11 @@ async function updateNote(id, updates, userId) {
   if (!note) return null;
   if (note.userId.toString() !== userId.toString()) return null;
   if (note.isDeleted) return null;
-  const { title, content } = updates;
+  const { title, content, summary } = updates;
   if (!title || !content) return null;
   note.title = title;
   note.content = content;
+  note.summary = summary;
   note.updatedAt = new Date();
   await note.save();
   return note;

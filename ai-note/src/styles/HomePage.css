@@ -101,6 +101,17 @@ h1 {
   transform: translateY(-2px);
 }
 
+.logout {
+  position: fixed;
+  top: 20px;
+  right: 50px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 100;
+}
+
 .mockup-notes {
   position: relative;
   width: 300px;
@@ -348,6 +359,7 @@ h1 {
   color: var(--hero-subtitle);
 }
 
+
 /* Responsive Typography & Layout */
 @media (max-width: 768px) {
   h1 {
@@ -372,3 +384,4 @@ h1 {
     font-size: 2rem;
   }
 }
+

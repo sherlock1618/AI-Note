@@ -19,18 +19,24 @@ const HomePage = () => {
     handleChange,
     handleSubmit,
     handleEmailVerification,
-    handleSocialLogin
+    handleSocialLogin,
+    handleLogout,
   } = useAuth();
 
   return (
     <div className={`home-container ${darkMode ? 'dark' : 'light'}`}>
-      <button 
-        className="theme-toggle"
-        onClick={toggleTheme}
-        aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
-      >
-        {darkMode ? <FaSun /> : <FaMoon />}
-      </button>
+      <div className='right-header'>
+        <button 
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+        >
+          {darkMode ? <FaSun /> : <FaMoon />}
+        </button>
+        <button className='logout cta-primary' onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
       <AnimatePresence>
         {emailSent && (
           <motion.div
