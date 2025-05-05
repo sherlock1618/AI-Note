@@ -62,10 +62,6 @@ const HomePage = () => {
           <p className="hero-subtitle">
             Organize your thoughts with intelligent suggestions and seamless sync
           </p>
-          <div className="cta-buttons">
-            <button className="cta-primary">Try For Free</button>
-            <button className="cta-secondary">Watch Demo</button>
-          </div>
         </div>
         <div className="hero-image">
           <div className="mockup-notes">
